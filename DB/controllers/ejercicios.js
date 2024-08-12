@@ -1,12 +1,12 @@
 import {client} from "../db.js";
 
-const getEjercicio = async (_, res) => {
+const getEjercicios = async (_, res) => {
 
     const rows = await client.query('SELECT * FROM alumnos');
     res.json(rows);
     }
 
-const getEjercicios = async (req, res) => {
+const getEjercicio = async (req, res) => {
 
     const id = req.params.id
     const rows = await conn.query("SELECT * FROM artistas WHERE id = $1", [id])
@@ -39,8 +39,8 @@ const deleteEjercicio = async (req, res) => {
 };
 
 const ejercicio = {
-    getEjercicio,
     getEjercicios,
+    getEjercicio,
     createEjercicio,
     updateEjercicio,
     deleteEjercicio
