@@ -1,15 +1,14 @@
-import { Client } from "pg";
-import dotenv from 'dotenv';
+import pg from "pg";
+const { Client } = pg;
+import 'dotenv/config';
 
-dotenv.config();
-
-export const client = new Client({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
-    port: 3000,
+const client = new Client({
+    host: process.env.POSTGRES_HOST,
+    user: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
+    database: process.env.POSTGRES_DATABASE,
+    port: 5432,
     ssl: true
 });
 
-client.connect(); 
+client.connect();
