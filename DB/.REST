@@ -13,7 +13,9 @@ POST http://localhost:3000/usuarios HTTP/1.1
 Content-Type: application/json
 
 {
-  "nombre": "Juan"
+  "usuario": "Juan",
+  "email": "baader@baader.baader",
+  "contraseña": "baader123"
 }
 
 ### Update un usuario
