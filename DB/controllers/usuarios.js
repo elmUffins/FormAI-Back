@@ -18,8 +18,10 @@ const createUsuario = async (req, res) => {
     const user = req.body
     const email = req.body
     const contraseña = req.body
-    await client.query("INSERT INTO usuarios (user, email, contraseña ) VALUES ($1)", [user], [email], [contraseña])
-    res.json(user)
+
+    console.log(req.body)
+    await client.query("INSERT INTO usuarios (usuario, email, contraseña) VALUES ($1, $2, $3)", [user, email, contraseña])
+    res.json(user);
 };
 
 const updateUsuario = async (req, res) => {
