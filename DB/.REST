@@ -15,7 +15,7 @@ Content-Type: application/json
 {
   "usuario": "Juan",
   "email": "baader@baader.baader",
-  "contraseña": "baader123"
+  "pass": "baader123"
 }
 
 ### Update un usuario
