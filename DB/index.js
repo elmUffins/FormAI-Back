@@ -16,7 +16,7 @@ app.get("/", (_, res) => {
 app.get("/usuarios", usuarios.getUsuarios);
 app.get("/usuarios/:id", usuarios.getUsuario);
 app.post("/usuarios", usuarios.createUsuario);
-app.put("/usuarios/:id", usuarios.createUsuario);
+app.put("/usuarios/:id", usuarios.updateUsuario);
 app.delete("/usuarios/:id", usuarios.deleteUsuario);
 
 // Ejercicios
