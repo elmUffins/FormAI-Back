@@ -15,18 +15,18 @@ const getEjercicio = async (req, res) => {
 
 const createEjercicio = async (req, res) => {
 
-    const user = req.body
-    const email = req.body
-    const contraseña = req.body
-    await client.query("INSERT INTO ejercicios (user, email, contraseña ) VALUES ($1)", [user], [email], [contraseña])
-    res.json(user)
+    const {nombre, descripcion, categoria} = req.body
+ 
+    await client.query("INSERT INTO ejercicios (nombre, descripcion, categoria) VALUES ($1, $2, $3)", 
+    [nombre], [descripcion], [categoria])
+    res.json({nombre, descripcion, categoria})
 };
 
 const updateEjercicio = async (req, res) => {
 
     const nombre = req.body
     const id = req.params.id
-    await client.query("UPDATE ejercicios SET nombre = ? WHERE id = $1", [nombre, id])
+    await client.query("UPDATE ejercicios SET nombre = $1 WHERE id = $2", [nombre, id])
 
     res.json(nombre)
 };
