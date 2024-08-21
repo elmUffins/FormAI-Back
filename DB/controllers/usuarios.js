@@ -23,11 +23,11 @@ const createUsuario = async (req, res) => {
 
 const updateUsuario = async (req, res) => {
 
-    const nombre = req.body
+    const {usuario} = req.body
     const id = req.params.id
-    await client.query("UPDATE usuarios SET nombre = $1 WHERE id = $2", [nombre, id])
+    await client.query("UPDATE usuarios SET usuario = $1 WHERE id = $2", [usuario, id])
 
-    res.json(nombre)
+    res.json({usuario, id})
 };
 
 const deleteUsuario = async (req, res) => {
