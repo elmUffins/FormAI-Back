@@ -24,7 +24,7 @@ PUT http://localhost:3000/usuarios/1 HTTP/1.1
 Content-Type: application/json
 
 {
-  "nombre": "Fede"
+  "usuario": "Fede"
 }
 
 ### Eliminar un usuario
@@ -47,6 +47,8 @@ Content-Type: application/json
 
 {
   "nombre": "Flexiones",
+  "descripcion": "Excelente ejercicio para entrenar el pecho y los triceps bro",
+  "categoria": "Peso corporal - Pecho"
 }
 
 ### Actualizar un ejercicio
@@ -77,7 +79,9 @@ POST http://localhost:3000/etapas HTTP/1.1
 Content-Type: application/json
 
 {
-  "nombre": "Etapa 1",
+  "nombre": "De rodillas",
+  "descripcion": "Para empezar el ejercicio, usted debe ser capaz de realizar el movimiento con las rodillas apolladas",
+  "id_ejercicio": "1"
 }
 
 ### Actualizar una etapa
@@ -86,7 +90,7 @@ PUT http://localhost:3000/etapas/1 HTTP/1.1
 Content-Type: application/json
 
 {
-  "nombre": "Etapa 2",
+  "nombre": "Bomboclaat",
 }
 
 ### Eliminar una etapa
