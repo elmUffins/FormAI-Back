@@ -3,21 +3,20 @@ import {client} from "../db.js";
 const getEtapas = async (_, res) => {
 
     const rows = await client.query('SELECT * FROM etapas');
-    res.json(rows);
-    }
+    res.json(rows)
+};
 
 const getEtapa = async (req, res) => {
 
     const id = req.params.id
     const rows = await client.query("SELECT * FROM etapas WHERE id = $1", [id])
     res.json(rows[0])
-}
+};
 
 const createEtapa = async (req, res) => {
 
     const {nombre, descripcion, id_ejercicio} = req.body
-
-    await client.query("INSERT INTO etapas (nombre, descripcion, id_ejercicio) VALUES ($1)",
+    await client.query("INSERT INTO etapas (nombre, descripcion, id_ejercicio) VALUES ($1, $2, $3)",
     [nombre], [descripcion], [id_ejercicio])
     res.json({nombre, descripcion, id_ejercicio})
 };
