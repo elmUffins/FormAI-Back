@@ -23,7 +23,7 @@ const createEjercicio = async (req, res) => {
 
 const updateEjercicio = async (req, res) => {
 
-    const nombre = req.body
+    const {nombre} = req.body
     const id = req.params.id
     console.log(nombre, id)
     await client.query("UPDATE ejercicios SET nombre = $1 WHERE id = $2", [nombre, id])

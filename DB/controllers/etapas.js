@@ -23,11 +23,11 @@ const createEtapa = async (req, res) => {
 
 const updateEtapa = async (req, res) => {
 
-    const nombre = req.body
+    const {nombre} = req.body
     const id = req.params.id
     await client.query("UPDATE etapas SET nombre = $1 WHERE id = $2", [nombre, id])
 
-    res.json(nombre)
+    res.json({nombre})
 };
 
 const deleteEtapa = async (req, res) => {

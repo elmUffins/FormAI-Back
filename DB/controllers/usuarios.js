@@ -22,7 +22,7 @@ const createUsuario = async (req, res) => {
 
 const updateUsuario = async (req, res) => {
 
-    const usuario = req.body
+    const {usuario} = req.body
     const id = req.params.id
     await client.query("UPDATE usuarios SET usuario = $1 WHERE id = $2", [usuario, id])
     res.json({usuario, id})
