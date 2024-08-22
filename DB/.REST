@@ -57,7 +57,7 @@ PUT http://localhost:3000/ejercicios/1 HTTP/1.1
 Content-Type: application/json
 
 {
-  "nombre": "Sentadilla",
+  "nombre": "Sentadilla"
 }
 
 ### Eliminar un ejercicio
