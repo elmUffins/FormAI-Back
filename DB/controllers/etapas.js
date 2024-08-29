@@ -14,7 +14,7 @@ const getEtapa = async (req, res) => {
 const createEtapa = async (req, res) => {
     const { nombre, descripcion, id_ejercicio } = req.body
     await client.query("INSERT INTO etapas (nombre, descripcion, id_ejercicio) VALUES ($1, $2, $3)",
-        [nombre], [descripcion], [id_ejercicio])
+    [nombre], [descripcion], [id_ejercicio])
     res.json({ nombre, descripcion, id_ejercicio })
 };
 
