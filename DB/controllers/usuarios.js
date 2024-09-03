@@ -1,4 +1,5 @@
 import { client } from "../db.js";
+import bcrypt from "bcryptjs";
 
 const getUsuarios = async (_, res) => {
     const { rows } = await client.query('SELECT * FROM usuarios')
@@ -13,8 +14,11 @@ const getUsuario = async (req, res) => {
 
 const createUsuario = async (req, res) => {
     const { usuario, email, pass } = req.body
-    await client.query("INSERT INTO usuarios (usuario, email, pass) VALUES ($1, $2, $3)", [usuario, email, pass])
-    res.json({ usuario, email, pass })
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(pass, salt);
+    await client.query("INSERT INTO usuarios (usuario, email, pass) VALUES ($1, $2, $3)", 
+    [usuario, email, hashedPassword])
+    res.json({ usuario, email, hashedPassword })
 };
 
 const updateUsuario = async (req, res) => {
