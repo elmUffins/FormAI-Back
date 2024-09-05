@@ -14,7 +14,7 @@ const getEjercicio = async (req, res) => {
 const createEjercicio = async (req, res) => {
     const { nombre, descripcion, categoria } = req.body
     await client.query("INSERT INTO ejercicios (nombre, descripcion, categoria) VALUES ($1, $2, $3)",
-        [nombre, descripcion, categoria])
+    [nombre, descripcion, categoria])
     res.json({ nombre, descripcion, categoria })
 };
 
