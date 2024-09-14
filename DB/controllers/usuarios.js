@@ -2,37 +2,26 @@ import { client } from "../db.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-
 const logIn = async (req, res) => {
-    const { usuario, pass } = req.body 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(pass, salt);
+    const { usuario, pass } = req.body;
 
     try {
-        const checkUser = await client.query('SELECT * FROM usuarios WHERE usuario = $1', [usuario])
-        if (!checkUser.rows.length)
-        {
-            return res.status(404).send("Not found")
-        }
-        else 
-        {
-            const isMatch = await bcrypt.compare(hashedPassword, checkUser.rows[0].pass);
-            if (isMatch)
-            {
-                return res.status(200).send("Login successful");
-            }
-            else
-            {
-                return res.status(200).send("Wrong information");
+        const checkUser = await client.query('SELECT * FROM usuarios WHERE usuario = $1', [usuario]);
+        if (!checkUser.rows.length) {
+            return res.status(404).send("Not found");
+        } else {
+            const isMatch = await bcrypt.compare(pass, checkUser.rows[0].pass);
+            if (isMatch) {
+                const token = jwt.sign({ id: checkUser.rows[0].id }, 'your_jwt_secret', { expiresIn: '1h' });
+                return res.status(200).json({ message: "Login successful", token });
+            } else {
+                return res.status(401).send("Wrong information");
             }
         }
-
-    } 
-    catch (error)
-    {
+    } catch (error) {
         return res.status(500).json({ error: error.message });
     }
-}
+};
 
 const getUsuarios = async (_, res) => {
     const { rows } = await client.query('SELECT * FROM usuarios')
