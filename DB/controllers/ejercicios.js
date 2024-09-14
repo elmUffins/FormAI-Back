@@ -1,38 +1,56 @@
-import { client } from "../db.js";
+import * as ejercicioService from "../services/ejercicios_s.js";
 
 const getEjercicios = async (_, res) => {
-    const { rows } = await client.query('SELECT * FROM ejercicios');
-    res.json(rows)
+    try {
+        const ejercicios = await ejercicioService.getAllEjercicios();
+        return res.json(ejercicios);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
 };
 
 const getEjercicio = async (req, res) => {
-    const id = req.params.id
-    const { rows } = await client.query("SELECT * FROM ejercicios WHERE id = $1", [id])
-    res.json(rows[0])
+    const id = req.params.id;
+    try {
+        const ejercicio = await ejercicioService.getEjercicioById(id);
+        return res.json(ejercicio);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
 };
 
 const createEjercicio = async (req, res) => {
-    const { nombre, descripcion, categoria } = req.body
-    await client.query("INSERT INTO ejercicios (nombre, descripcion, categoria) VALUES ($1, $2, $3)",
-    [nombre, descripcion, categoria])
-    res.json({ nombre, descripcion, categoria })
+    const { nombre, descripcion } = req.body;
+    try {
+        const newEjercicio = await ejercicioService.createEjercicio(nombre, descripcion);
+        return res.status(201).json(newEjercicio);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
 };
 
 const updateEjercicio = async (req, res) => {
-    const { nombre } = req.body
-    const id = req.params.id
-    console.log(nombre, id)
-    await client.query("UPDATE ejercicios SET nombre = $1 WHERE id = $2", [nombre, id])
-    res.json({ nombre, id })
+    const { nombre, descripcion } = req.body;
+    const id = req.params.id;
+    try {
+        const updatedEjercicio = await ejercicioService.updateEjercicio(id, nombre, descripcion);
+        return res.json(updatedEjercicio);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
 };
 
 const deleteEjercicio = async (req, res) => {
-    const id = req.params.id
-    await client.query("DELETE FROM ejercicios WHERE id = $1", [id])
-    res.json(id)
+    const id = req.params.id;
+    try {
+        const deletedId = await ejercicioService.deleteEjercicio(id);
+        return res.json(deletedId);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
 };
 
-const ejercicio = {
+const ejercicios = {
     getEjercicios,
     getEjercicio,
     createEjercicio,
@@ -40,4 +58,4 @@ const ejercicio = {
     deleteEjercicio
 };
 
-export default ejercicio;
+export default ejercicios;

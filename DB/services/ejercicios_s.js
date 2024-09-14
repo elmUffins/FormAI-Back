@@ -1,43 +1,40 @@
 import { client } from "../db.js";
 
-const getEjercicios = async (_, res) => {
+const getAllEjercicios = async () => {
     const { rows } = await client.query('SELECT * FROM ejercicios');
-    res.json(rows)
+    return rows;
 };
 
-const getEjercicio = async (req, res) => {
-    const id = req.params.id
-    const { rows } = await client.query("SELECT * FROM ejercicios WHERE id = $1", [id])
-    res.json(rows[0])
+const getEjercicioById = async (id) => {
+    const { rows } = await client.query("SELECT * FROM ejercicios WHERE id = $1", [id]);
+    return rows[0];
 };
 
-const createEjercicio = async (req, res) => {
-    const { nombre, descripcion, categoria } = req.body
-    await client.query("INSERT INTO ejercicios (nombre, descripcion, categoria) VALUES ($1, $2, $3)",
-    [nombre, descripcion, categoria])
-    res.json({ nombre, descripcion, categoria })
+const createEjercicio = async (nombre, descripcion) => {
+    const { rows } = await client.query(
+        "INSERT INTO ejercicios (nombre, descripcion) VALUES ($1, $2)",
+        [nombre, descripcion]
+    );
+    return rows[0];
 };
 
-const updateEjercicio = async (req, res) => {
-    const { nombre } = req.body
-    const id = req.params.id
-    console.log(nombre, id)
-    await client.query("UPDATE ejercicios SET nombre = $1 WHERE id = $2", [nombre, id])
-    res.json({ nombre, id })
+const updateEjercicio = async (id, nombre, descripcion) => {
+    const { rows } = await client.query(
+        "UPDATE ejercicios SET nombre = $1, descripcion = $2 WHERE id = $3",
+        [nombre, descripcion, id]
+    );
+    return rows[0];
 };
 
-const deleteEjercicio = async (req, res) => {
-    const id = req.params.id
-    await client.query("DELETE FROM ejercicios WHERE id = $1", [id])
-    res.json(id)
+const deleteEjercicio = async (id) => {
+    await client.query("DELETE FROM ejercicios WHERE id = $1", [id]);
+    return id;
 };
 
-const ejercicio = {
-    getEjercicios,
-    getEjercicio,
+export {
+    getAllEjercicios,
+    getEjercicioById,
     createEjercicio,
     updateEjercicio,
     deleteEjercicio
 };
-
-export default ejercicio;
