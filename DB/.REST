@@ -1,18 +1,18 @@
 // ---- USUARIOS ---- \\
 
 ### Register
-POST http://localhost:3000/usuarios HTTP/1.1
+POST http://localhost:3000/usuarios/register HTTP/1.1
 Content-Type: application/json
 
 {
   "usuario": "Juan",
-  "email": "asd@gmail.com",
+  "email": "a",
   "pass": "asd"
 }
 
 
 ### Log in
-POST http://localhost:3000/usuarios HTTP/1.1
+POST http://localhost:3000/usuarios/login HTTP/1.1
 Content-Type: application/json
 
 {
