@@ -17,7 +17,7 @@ Content-Type: application/json
 
 {
   "usuario": "Juan",
-  "pass": "hasvlhdsk"
+  "pass": "asd"
 }
 
 
@@ -68,9 +68,7 @@ POST http://localhost:3000/ejercicios HTTP/1.1
 Content-Type: application/json
 
 {
-  "nombre": "Flexiones",
-  "descripcion": "Excelente ejercicio para entrenar el pecho y los triceps bro",
-  "categoria": "Peso corporal - Pecho"
+  "nombre": "Flexiones"
 }
 
 ### Actualizar un ejercicio
