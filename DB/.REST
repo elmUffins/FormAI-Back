@@ -5,7 +5,7 @@ POST http://localhost:3000/usuarios HTTP/1.1
 Content-Type: application/json
 
 {
-  "usuario": "asd",
+  "usuario": "Juan",
   "email": "asd@gmail.com",
   "pass": "asd"
 }
