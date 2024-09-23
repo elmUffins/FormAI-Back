@@ -52,9 +52,10 @@ const createUsuario = async (usuario, email, pass) => {
     return { usuario, email, hashedPassword };
 };
 
-const updateUsuario = async (id, usuario) => {
-    await client.query("UPDATE usuarios SET usuario = $1 WHERE id = $2", [usuario, id]);
-    return { usuario, id };
+const updateUsuario = async (id, usuario, email, pass) => {
+    await client.query("UPDATE usuarios SET usuario = $1, SET email = $2, SET pass = $3 WHERE id = $4",
+    [usuario, email, pass, id]);
+    return { usuario, email, pass, id };
 };
 
 const deleteUsuario = async (id) => {
