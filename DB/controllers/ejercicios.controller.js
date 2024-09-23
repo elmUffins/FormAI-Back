@@ -1,8 +1,8 @@
-import * as ejercicioService from "../services/ejercicios.service.js";
+import ejercicioService from "../services/ejercicios.service.js";
 
 const getEjercicios = async (_, res) => {
     try {
-        const ejercicios = await ejercicioService.getAllEjercicios();
+        const ejercicios = await ejercicioService.getEjercicios();
         return res.json(ejercicios);
     } catch (error) {
         return res.status(500).json({ error: error.message });
@@ -50,7 +50,7 @@ const deleteEjercicio = async (req, res) => {
     }
 };
 
-const ejercicios = {
+export default {
     getEjercicios,
     getEjercicio,
     createEjercicio,
@@ -58,4 +58,3 @@ const ejercicios = {
     deleteEjercicio
 };
 
-export default ejercicios;

@@ -1,6 +1,6 @@
 import { client } from "../db.js";
 
-const getAllEjercicios = async () => {
+const getEjercicios = async () => {
     const { rows } = await client.query('SELECT * FROM ejercicios');
     return rows;
 };
@@ -31,8 +31,8 @@ const deleteEjercicio = async (id) => {
     return id;
 };
 
-export {
-    getAllEjercicios,
+export default {
+    getEjercicios,
     getEjercicioById,
     createEjercicio,
     updateEjercicio,

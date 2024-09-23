@@ -1,4 +1,4 @@
-import * as usuarioService from "../services/usuarios.service.js";
+import usuarioService from "../services/usuarios.service.js";
 
 const register = async (req, res) => {
     const { usuario, email, pass } = req.body;
@@ -80,7 +80,7 @@ const deleteUsuario = async (req, res) => {
     }
 };
 
-const usuarios = {
+export default {
     logIn,
     register,
     getUsuarios,
@@ -89,5 +89,3 @@ const usuarios = {
     updateUsuario,
     deleteUsuario
 };
-
-export default usuarios;

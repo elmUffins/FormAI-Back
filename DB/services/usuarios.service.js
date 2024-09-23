@@ -62,7 +62,7 @@ const deleteUsuario = async (id) => {
     return id;
 };
 
-export {
+export default {
     registerUser,
     logInUser,
     getAllUsuarios,

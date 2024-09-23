@@ -1,13 +1,13 @@
 import Router from 'express';
-import ejercicios from '../controllers/ejercicios.controller.js';
+import ejerciciosController from '../controllers/ejercicios.controller.js';
 
 const router = Router();
 
 // Define routes
-router.get('/', ejercicios.getEjercicios);
-router.get('/:id', ejercicios.getEjercicio);
-router.post('/', ejercicios.createEjercicio);
-router.put('/:id', ejercicios.updateEjercicio);
-router.delete('/:id', ejercicios.deleteEjercicio);
+router.get('/', ejerciciosController.getEjercicios);
+router.get('/:id', ejerciciosController.getEjercicio);
+router.post('/', ejerciciosController.createEjercicio);
+router.put('/:id', ejerciciosController.updateEjercicio);
+router.delete('/:id', ejerciciosController.deleteEjercicio);
 
 export default router;
