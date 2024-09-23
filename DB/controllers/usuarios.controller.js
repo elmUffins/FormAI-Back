@@ -41,6 +41,11 @@ const getUsuarios = async (_, res) => {
 
 const getUsuario = async (req, res) => {
     const id = req.params.id;
+
+    if (!id) {
+        return res.status(400).json("An id is required")
+    }
+
     try {
         const usuario = await usuarioService.getUsuarioById(id);
         return res.json(usuario);
@@ -51,6 +56,11 @@ const getUsuario = async (req, res) => {
 
 const createUsuario = async (req, res) => {
     const { usuario, email, pass } = req.body;
+
+    if (!usuario || !email || !pass) {
+        return res.status(400).json({ error: "Missing info, fella" });
+    }
+
     try {
         const newUser = await usuarioService.createUsuario(usuario, email, pass);
         return res.status(201).json(newUser);
@@ -60,11 +70,30 @@ const createUsuario = async (req, res) => {
 };
 
 const updateUsuario = async (req, res) => {
-    const { usuario } = req.body;
+    const { usuario, email, pass } = req.body;
     const id = req.params.id;
+
+    if (!usuario || !email || !pass || !id) {
+        return res.status(400).json({ error: "Missing info, fella" });
+    }
+
     try {
-        const updatedUser = await usuarioService.updateUsuario(id, usuario);
+        const updatedUser = await usuarioService.updateUsuario(id, usuario, email, pass);
         return res.json(updatedUser);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+const promoteUsuario = async (req, res) => {
+    const id = req.params.id;
+
+    if (id) {
+        return res.status(400).json({ error: "An id is required" });
+    }
+
+    try {
+
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
