@@ -1,4 +1,4 @@
-import * as ejercicioService from "../services/ejercicios_s.js";
+import * as ejercicioService from "../services/ejercicios.service.js";
 
 const getEjercicios = async (_, res) => {
     try {

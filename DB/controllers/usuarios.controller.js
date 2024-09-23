@@ -1,4 +1,4 @@
-import * as usuarioService from "../services/usuarios_s.js";
+import * as usuarioService from "../services/usuarios.service.js";
 
 const register = async (req, res) => {
     const { usuario, email, pass } = req.body;
