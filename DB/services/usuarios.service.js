@@ -58,6 +58,11 @@ const updateUsuario = async (id, usuario, email, pass) => {
     return { usuario, email, pass, id };
 };
 
+const promoteUsuario = async (id) => {
+    await client.query("UPDATE usuarios SET admin = true WHERE id = $1", [id]);
+    return id;
+};
+
 const deleteUsuario = async (id) => {
     await client.query("DELETE FROM usuarios WHERE id = $1", [id]);
     return id;
@@ -70,5 +75,6 @@ export default {
     getUsuarioById,
     createUsuario,
     updateUsuario,
+    promoteUsuario,
     deleteUsuario
 };

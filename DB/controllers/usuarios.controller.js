@@ -93,7 +93,8 @@ const promoteUsuario = async (req, res) => {
     }
 
     try {
-
+        const newAdmin = await usuarioService.promoteUsuario(id);
+        return res.json(newAdmin)
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
