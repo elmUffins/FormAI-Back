@@ -8,7 +8,7 @@ const register = async (req, res) => {
     }
 
     try {
-        await usuarioService.registerUser(usuario, email, pass);
+        await usuarioService.register(usuario, email, pass);
         res.status(201).json("Success!");
     } catch (error) {
         return res.status(409).json({ error: error.message });
@@ -23,7 +23,7 @@ const logIn = async (req, res) => {
     }
 
     try {
-        await usuarioService.logInUser(usuario, pass);
+        await usuarioService.login(usuario, pass);
         res.status(201).json("Success!")
     } catch (error) {
         return res.status(401).json({ error: error.message });
@@ -117,5 +117,6 @@ export default {
     getUsuario,
     createUsuario,
     updateUsuario,
+    promoteUsuario,
     deleteUsuario
 };

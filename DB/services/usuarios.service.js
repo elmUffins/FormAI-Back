@@ -2,7 +2,7 @@ import { client } from "../db.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const registerUser = async (usuario, email, pass) => {
+const register = async (usuario, email, pass) => {
     const checkUser = await client.query('SELECT * FROM usuarios WHERE usuario = $1', [usuario]);
     if (checkUser.rows.length) {
         throw new Error("User already exists");
@@ -18,7 +18,7 @@ const registerUser = async (usuario, email, pass) => {
     }
 };
 
-const logInUser = async (usuario, pass) => {
+const login = async (usuario, pass) => {
     const checkUser = await client.query('SELECT * FROM usuarios WHERE usuario = $1', [usuario]);
     if (!checkUser.rows.length) {
         throw new Error("User not found");
@@ -69,8 +69,8 @@ const deleteUsuario = async (id) => {
 };
 
 export default {
-    registerUser,
-    logInUser,
+    register,
+    login,
     getAllUsuarios,
     getUsuarioById,
     createUsuario,
