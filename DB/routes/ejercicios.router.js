@@ -1,13 +1,13 @@
 import Router from 'express';
 import ejerciciosController from '../controllers/ejercicios.controller.js';
+import auth from '../middleware/auth.js';
 
 const router = Router();
 
-// Define routes
 router.get('/', ejerciciosController.getEjercicios);
 router.get('/:id', ejerciciosController.getEjercicio);
-router.post('/', ejerciciosController.createEjercicio);
-router.put('/:id', ejerciciosController.updateEjercicio);
-router.delete('/:id', ejerciciosController.deleteEjercicio);
+router.post('/', auth.verifyToken, auth.verifyAdmin, ejerciciosController.createEjercicio);
+router.put('/:id', auth.verifyToken, auth.verifyAdmin, ejerciciosController.updateEjercicio);
+router.delete('/:id', auth.verifyToken, auth.verifyAdmin, ejerciciosController.deleteEjercicio);
 
 export default router;
