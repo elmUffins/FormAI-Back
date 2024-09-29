@@ -1,38 +1,4 @@
 import { client } from "../db.js";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-
-const register = async (usuario, email, pass) => {
-    const checkUser = await client.query('SELECT * FROM usuarios WHERE usuario = $1', [usuario]);
-    if (checkUser.rows.length) {
-        throw new Error("User already exists");
-    } else {
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(pass, salt);
-        const newUser = await client.query(
-            "INSERT INTO usuarios (usuario, email, pass) VALUES ($1, $2, $3) RETURNING id",
-            [usuario, email, hashedPassword]
-        );
-        const token = jwt.sign({ id: newUser.rows[0].id }, "tra", { expiresIn: "1h" });
-        return { message: "User registered successfully", token };
-    }
-};
-
-const login = async (usuario, pass) => {
-    const checkUser = await client.query('SELECT * FROM usuarios WHERE usuario = $1', [usuario]);
-    if (!checkUser.rows.length) {
-        throw new Error("User not found");
-    } else {
-        const user = checkUser.rows[0];
-        const isMatch = await bcrypt.compare(pass, user.pass);
-        if (!isMatch) {
-            throw new Error("Unauthorized");
-        } else {
-            const token = jwt.sign({ id: user.id }, "tra", { expiresIn: "1h" });
-            return { message: "Login successful", token };
-        }
-    }
-};
 
 const getAllUsuarios = async () => {
     const { rows } = await client.query('SELECT * FROM usuarios');
@@ -44,12 +10,15 @@ const getUsuarioById = async (id) => {
     return rows[0];
 };
 
+const getUsuarioByEmail = async (email) => {
+    const { rows } = await client.query("SELECT * FROM usuarios WHERE email = $1", [email]);
+    return rows[0];
+};
+
 const createUsuario = async (usuario, email, pass) => {
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(pass, salt);
-    await client.query("INSERT INTO usuarios (usuario, email, pass) VALUES ($1, $2, $3)",
-    [usuario, email, hashedPassword]);
-    return { usuario, email, hashedPassword };
+    await client.query("INSERT INTO usuarios (usuario, email, pass, admin) VALUES ($1, $2, $3, false)",
+    [usuario, email, pass]);
+    return { usuario, email, pass, admin: false };
 };
 
 const updateUsuario = async (id, usuario, email, pass) => {
@@ -73,6 +42,7 @@ export default {
     login,
     getAllUsuarios,
     getUsuarioById,
+    getUsuarioByEmail,
     createUsuario,
     updateUsuario,
     promoteUsuario,
