@@ -1,34 +1,59 @@
 import usuarioService from "../services/usuarios.service.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+
+const JWT_KEY = process.env.JWT_KEY;
 
 const register = async (req, res) => {
     const { usuario, email, pass } = req.body;
 
     if (!usuario || !email || !pass) {
-        return res.status(400).json({ error: "Missing info, fella" });
+        return res.status(400).json({ message: "Missing fields" });
     }
 
     try {
-        await usuarioService.register(usuario, email, pass);
-        res.status(201).json("Success!");
-    } catch (error) {
-        return res.status(409).json({ error: error.message });
-    }
+        const testMail = await usuarioService.getUsuarioByEmail(email);
+        if (testMail) {
+            return res.status(400).json({message: "Email already in use"});
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(pass, salt);
+        await usuarioService.createUsuario(usuario, email, hashedPassword);
+        res.status(201).json({ message: "User registered succesfully" });
+
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({ message: "Could not register user" });
+        }
 };
 
-const logIn = async (req, res) => {
-    const { usuario, pass } = req.body;
+const login = async (req, res) => {
+    const { email, pass } = req.body;
 
-    if (!usuario || !pass) {
-        return res.status(400).json({ error: "Missing info, fella" });
+    if (!email || !pass) {
+        return res.status(400).json({ message: "Missing fields" });
     }
 
     try {
-        await usuarioService.login(usuario, pass);
-        res.status(201).json("Success!")
+        const usuario = await usuarioService.getUsuarioByEmail(email);
+        if (!usuario) {
+            return res.status(400).json({ message: "User not found" });
+        }
+
+        const validPassword = await bcrypt.compare(pass, usuario.password);
+        if (!validPassword) {
+            return res.status(400).json({ message: "Contraseña incorrecta" });
+        }
+
+        const token = jwt.sign({ id: usuario.id }, JWT_KEY, { expiresIn: '4h' });
+        res.status(200).json({ usuario, token });
     } catch (error) {
-        return res.status(401).json({ error: error.message });
+        console.log(error)
+        res.status(500).json({ message: "Error al iniciar sesión" });
     }
 };
+
 
 const getUsuarios = async (_, res) => {
     try {
@@ -111,7 +136,7 @@ const deleteUsuario = async (req, res) => {
 };
 
 export default {
-    logIn,
+    login,
     register,
     getUsuarios,
     getUsuario,
