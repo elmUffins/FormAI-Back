@@ -10,18 +10,18 @@ const getEjercicioById = async (id) => {
     return rows[0];
 };
 
-const createEjercicio = async (nombre, descripcion) => {
+const createEjercicio = async (nombre) => {
     const { rows } = await client.query(
-        "INSERT INTO ejercicios (nombre, descripcion) VALUES ($1, $2)",
-        [nombre, descripcion]
+        "INSERT INTO ejercicios (nombre) VALUES ($1)",
+        [nombre]
     );
     return rows[0];
 };
 
-const updateEjercicio = async (id, nombre, descripcion) => {
+const updateEjercicio = async (id, nombre) => {
     const { rows } = await client.query(
-        "UPDATE ejercicios SET nombre = $1, descripcion = $2 WHERE id = $3",
-        [nombre, descripcion, id]
+        "UPDATE ejercicios SET nombre = $1 WHERE id = $2",
+        [nombre, id]
     );
     return rows[0];
 };
