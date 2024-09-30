@@ -16,15 +16,15 @@ const getUsuarioByEmail = async (email) => {
 };
 
 const createUsuario = async (usuario, email, pass) => {
-    await client.query("INSERT INTO usuarios (usuario, email, pass, admin) VALUES ($1, $2, $3, false)",
+    const { rows } = await client.query("INSERT INTO usuarios (usuario, email, pass, admin) VALUES ($1, $2, $3, false)",
     [usuario, email, pass]);
-    return { usuario, email, pass, admin: false };
+    return rows[0];
 };
 
 const updateUsuario = async (id, usuario, email, pass) => {
-    await client.query("UPDATE usuarios SET usuario = $1, SET email = $2, SET pass = $3 WHERE id = $4",
+    const { rows } = await client.query("UPDATE usuarios SET usuario = $1, SET email = $2, SET pass = $3 WHERE id = $4",
     [usuario, email, pass, id]);
-    return { usuario, email, pass, id };
+    return rows[0];
 };
 
 const promoteUsuario = async (id) => {
