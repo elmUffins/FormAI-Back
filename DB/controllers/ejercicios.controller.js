@@ -11,6 +11,8 @@ const getEjercicios = async (_, res) => {
 
 const getEjercicio = async (req, res) => {
     const id = req.params.id;
+    if (!id) return res.status(400).json({ message: "An id is required" });
+
     try {
         const ejercicio = await ejerciciosService.getEjercicioById(id);
         return res.json(ejercicio);
@@ -20,7 +22,9 @@ const getEjercicio = async (req, res) => {
 };
 
 const createEjercicio = async (req, res) => {
-    const { nombre, descripcion } = req.body;
+    const { nombre } = req.body;
+    if (!nombre) return res.status(400).json({ message: "A name is required" });
+
     try {
         const newEjercicio = await ejerciciosService.createEjercicio(nombre, descripcion);
         return res.status(201).json(newEjercicio);
@@ -30,8 +34,10 @@ const createEjercicio = async (req, res) => {
 };
 
 const updateEjercicio = async (req, res) => {
-    const { nombre, descripcion } = req.body;
+    const { nombre } = req.body;
     const id = req.params.id;
+    if (!id || !nombre) return res.status(400).json({ message: "Missing fields" });
+
     try {
         const updatedEjercicio = await ejerciciosService.updateEjercicio(id, nombre, descripcion);
         return res.json(updatedEjercicio);
@@ -42,6 +48,8 @@ const updateEjercicio = async (req, res) => {
 
 const deleteEjercicio = async (req, res) => {
     const id = req.params.id;
+    if (!id) return res.status(400).json({ message: "An id is required" });
+    
     try {
         const deletedId = await ejerciciosService.deleteEjercicio(id);
         return res.json(deletedId);
