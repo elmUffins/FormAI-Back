@@ -18,6 +18,11 @@ const getVideoById = async (id) => {
     return rows[0];
 };
 
+const getVideosByUsuario = async (id_usuario) => {
+    const { rows } = await client.query("SELECT * FROM videos WHERE id_usuario = $1", [id_usuario]);
+    return rows;
+}
+
 const uploadVideo = async (file) => {
     try {
         const result = await new Promise((resolve, reject) => {
@@ -47,6 +52,7 @@ const deleteVideo = async (id) => {
 export default {
     getVideos,
     getVideoById,
+    getVideosByUsuario,
     uploadVideo,
     deleteVideo
 };
