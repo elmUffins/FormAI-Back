@@ -21,12 +21,12 @@ const getVideo = async (req, res) => {
     }
 };
 
-const getVideoByUsuario = async (req, res) => {
+const getVideosByUsuario = async (req, res) => {
     const id_usuario = req.userId;
     if (!user) return res.status(400).json({ message: "A user is required" });
 
     try {
-        const video = await videosService.getVideoByUsuario(id_usuario);
+        const video = await videosService.getVideosByUsuario(id_usuario);
         return res.json(video)
     } catch (error) {
         return res.status(500).json({ error: error.message });
@@ -52,6 +52,7 @@ const deleteVideo = async (req, res) => {
 export default {
     getVideos,
     getVideo,
+    getVideosByUsuario,
     uploadVideo,
     deleteVideo
 };
