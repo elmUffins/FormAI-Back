@@ -1,4 +1,4 @@
-import usuarioService from "../services/usuarios.service.js";
+import usuariosService from "../services/usuarios.service.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -12,14 +12,14 @@ const register = async (req, res) => {
     }
 
     try {
-        const testMail = await usuarioService.getUsuarioByEmail(email);
+        const testMail = await usuariosService.getUsuarioByEmail(email);
         if (testMail) {
             return res.status(400).json({message: "Email already in use"});
         }
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(pass, salt);
-        await usuarioService.createUsuario(usuario, email, hashedPassword);
+        await usuariosService.createUsuario(usuario, email, hashedPassword);
         res.status(201).json({ message: "User registered succesfully" });
 
         } catch (error) {
@@ -36,7 +36,7 @@ const login = async (req, res) => {
     }
 
     try {
-        const usuario = await usuarioService.getUsuarioByEmail(email);
+        const usuario = await usuariosService.getUsuarioByEmail(email);
         if (!usuario) {
             return res.status(400).json({ message: "User not found" });
         }
@@ -57,7 +57,7 @@ const login = async (req, res) => {
 
 const getUsuarios = async (_, res) => {
     try {
-        const usuarios = await usuarioService.getAllUsuarios();
+        const usuarios = await usuariosService.getAllUsuarios();
         return res.json(usuarios);
     } catch (error) {
         return res.status(500).json({ error: error.message });
@@ -72,7 +72,7 @@ const getUsuario = async (req, res) => {
     }
 
     try {
-        const usuario = await usuarioService.getUsuarioById(id);
+        const usuario = await usuariosService.getUsuarioById(id);
         return res.json(usuario);
     } catch (error) {
         return res.status(500).json({ error: error.message });
@@ -87,7 +87,7 @@ const createUsuario = async (req, res) => {
     }
 
     try {
-        const newUser = await usuarioService.createUsuario(usuario, email, pass);
+        const newUser = await usuariosService.createUsuario(usuario, email, pass);
         return res.status(201).json(newUser);
     } catch (error) {
         return res.status(500).json({ error: error.message });
@@ -103,7 +103,7 @@ const updateUsuario = async (req, res) => {
     }
 
     try {
-        const updatedUser = await usuarioService.updateUsuario(id, usuario, email, pass);
+        const updatedUser = await usuariosService.updateUsuario(id, usuario, email, pass);
         return res.json(updatedUser);
     } catch (error) {
         return res.status(500).json({ error: error.message });
@@ -118,7 +118,7 @@ const promoteUsuario = async (req, res) => {
     }
 
     try {
-        const newAdmin = await usuarioService.promoteUsuario(id);
+        const newAdmin = await usuariosService.promoteUsuario(id);
         return res.json(newAdmin)
     } catch (error) {
         return res.status(500).json({ error: error.message });
@@ -128,7 +128,7 @@ const promoteUsuario = async (req, res) => {
 const deleteUsuario = async (req, res) => {
     const id = req.params.id;
     try {
-        const deletedId = await usuarioService.deleteUsuario(id);
+        const deletedId = await usuariosService.deleteUsuario(id);
         return res.json(deletedId);
     } catch (error) {
         return res.status(500).json({ error: error.message });
