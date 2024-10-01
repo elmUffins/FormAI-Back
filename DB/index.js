@@ -10,6 +10,12 @@ import videosRouter from './routers/videos.router.js';
 import "dotenv/config";
 
 app.use(express.json());
+app.use(cors());
+
+var corsOptions = {
+    origin: 'http://localhost/3000',
+    optionsSuccessStatus: 200
+  }
 
 app.get("/", (_, res) => {
     res.send("1");
