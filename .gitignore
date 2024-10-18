@@ -3,3 +3,4 @@
 .venv/
 DB/.env
 **/node_modules/
+DB/test.js
