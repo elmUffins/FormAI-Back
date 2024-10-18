@@ -9,11 +9,10 @@ export const verifyToken = async (req, res, next) => {
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
         return res.status(401).json({ message: "Empty token or incorrect format" });
     }
-    
-    // Del header, se asigna el token a la variable 'token', ignorando el 'Bearer'
+
     const token = authHeader.split(" ")[1];
     try {
-        const verification = jwt.verify(token, process.env.JWT_KEY);
+        const verification = jwt.verify(token, JWT_KEY);
         req.userId = verification.id;
         next();
     } catch (error) {

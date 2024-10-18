@@ -34,7 +34,13 @@ const getVideosByUsuario = async (req, res) => {
 };
 
 const uploadVideo = async (req, res) => {
-    
+    try {
+        const file = req.file;
+        const video = await videosService.uploadVideo(file);
+        return res.status(201).json(video);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
 };
 
 const deleteVideo = async (req, res) => {

@@ -1,16 +1,17 @@
 import Router from 'express';
+import multer from 'multer';
 import videosController from '../controllers/videos.controller.js';
 import auth from '../middleware/auth.js';
 
 const router = Router();
+const upload = multer({ dest: 'uploads/' });
 
 // Define routes
 router.get('/', auth.verifyToken, auth.verifyAdmin, videosController.getVideos);
 router.get('/:id', auth.verifyToken, videosController.getVideo);
 router.get('/usuario', auth.verifyToken, videosController.getVideosByUsuario);
-router.post('/', auth.verifyToken, videosController.uploadVideo);
+router.post('/', auth.verifyToken, upload.single('video'), videosController.uploadVideo);
 router.put('/:id', auth.verifyToken, videosController.deleteVideo);
-
 
 export default router;
 
