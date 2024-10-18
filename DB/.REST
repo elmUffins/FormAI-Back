@@ -123,6 +123,7 @@ Content-Disposition: form-data; name="video"; filename="sample.mp4"
 Content-Type: video/mp4
 
 < ./uploads/dreamfrfr.mp4
+--boundary--
 
 ### Delete a video
 DELETE http://localhost:3000/videos/1 HTTP/1.1

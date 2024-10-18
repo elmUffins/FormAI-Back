@@ -23,7 +23,7 @@ const getVideo = async (req, res) => {
 
 const getVideosByUsuario = async (req, res) => {
     const id_usuario = req.userId;
-    if (!user) return res.status(400).json({ message: "A user is required" });
+    if (!id_usuario) return res.status(400).json({ message: "A user is required" });
 
     try {
         const video = await videosService.getVideosByUsuario(id_usuario);
@@ -36,6 +36,10 @@ const getVideosByUsuario = async (req, res) => {
 const uploadVideo = async (req, res) => {
     try {
         const file = req.file;
+        console.log(file)
+
+        if (!file) return res.status(400).json({ message: "A file is required" });
+
         const video = await videosService.uploadVideo(file);
         return res.status(201).json(video);
     } catch (error) {
