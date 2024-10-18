@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import UsuariosService from "../services/usuarios.service.js";
 
-const JWT_KEY = process.env.JWT_KEY;
+const JWT_KEY = "YW5kYXRlYXZpdmlyYWJvbGl2aWF0b2RhdHVmYW1pbGlhZXN0YWFsbGE=";
 
 export const verifyToken = async (req, res, next) => {
     const authHeader = req.headers.authorization;
