@@ -16,22 +16,25 @@ POST http://localhost:3000/usuarios/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "josecrack@gmail.com",
-  "pass": "ELCRACK123"
+  "email": "fdiaznemeth@gmail.com",
+  "pass": "gagadet"
 }
 
 ### Get usuarios
 
 GET http://localhost:3000/usuarios HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNzI5Mjc3NTMzLCJleHAiOjE3MjkyOTE5MzN9.xRPc9i-CBe_H82I4RrMpBFP7XjE5xesc3Km8uDBne-g
 
 ### Get usuarios by ID
 
-GET http://localhost:3000/usuarios/1 HTTP/1.1
+GET http://localhost:3000/usuarios/3 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNzI5Mjc3NTMzLCJleHAiOjE3MjkyOTE5MzN9.xRPc9i-CBe_H82I4RrMpBFP7XjE5xesc3Km8uDBne-g
 
 ### Crear un usuario
 
 POST http://localhost:3000/usuarios HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNzI5Mjc3NTMzLCJleHAiOjE3MjkyOTE5MzN9.xRPc9i-CBe_H82I4RrMpBFP7XjE5xesc3Km8uDBne-g
 
 {
   "usuario": "gianasso",
@@ -41,16 +44,25 @@ Content-Type: application/json
 
 ### Update un usuario
 
-PUT http://localhost:3000/usuarios/1 HTTP/1.1
+PUT http://localhost:3000/usuarios/3 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzI5Mjc2ODM3LCJleHAiOjE3MjkyOTEyMzd9.Hs8z1dsyRWHcxQ9QkhMAhMssyEUMe77HnUpoGN4w2Ag
 
 {
-  "usuario": "Fede"
+  "usuario": "Fede",
+  "email": "",
+  "pass": ""
 }
+
+### Dar admin
+
+PUT http://localhost:3000/usuarios/promote/3 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNzI5Mjc3NTMzLCJleHAiOjE3MjkyOTE5MzN9.xRPc9i-CBe_H82I4RrMpBFP7XjE5xesc3Km8uDBne-g
 
 ### Eliminar un usuario
 
-DELETE http://localhost:3000/usuarios/1 HTTP/1.1
+DELETE http://localhost:3000/usuarios/5 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNzI5Mjc3NTMzLCJleHAiOjE3MjkyOTE5MzN9.xRPc9i-CBe_H82I4RrMpBFP7XjE5xesc3Km8uDBne-g
 
 // ---- EJERCICIOS ---- \\
 ### Obtener ejercicios
@@ -65,39 +77,46 @@ GET http://localhost:3000/ejercicios/1 HTTP/1.1
 
 POST http://localhost:3000/ejercicios HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNzI5Mjc3NTMzLCJleHAiOjE3MjkyOTE5MzN9.xRPc9i-CBe_H82I4RrMpBFP7XjE5xesc3Km8uDBne-g
 
 {
-  "nombre": "Flexiones"
+  "nombre": "Press banca chileno"
 }
 
 ### Actualizar un ejercicio
 
 PUT http://localhost:3000/ejercicios/1 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNzI5Mjc3NTMzLCJleHAiOjE3MjkyOTE5MzN9.xRPc9i-CBe_H82I4RrMpBFP7XjE5xesc3Km8uDBne-g
 
 {
-  "nombre": "Sentadilla"
+  "nombre": "Curl momia"
 }
 
 ### Eliminar un ejercicio
 
-DELETE http://localhost:3000/ejercicios/1 HTTP/1.1
+DELETE http://localhost:3000/ejercicios/2 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNzI5Mjc3NTMzLCJleHAiOjE3MjkyOTE5MzN9.xRPc9i-CBe_H82I4RrMpBFP7XjE5xesc3Km8uDBne-g
 
 / ---- VIDEOS ---- \\
 --boundary--
 
 ### Get all videos
 GET http://localhost:3000/videos HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNzI5Mjc3NTMzLCJleHAiOjE3MjkyOTE5MzN9.xRPc9i-CBe_H82I4RrMpBFP7XjE5xesc3Km8uDBne-g
 
 ### Get a video by ID
 GET http://localhost:3000/videos/1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNzI5Mjc3NTMzLCJleHAiOjE3MjkyOTE5MzN9.xRPc9i-CBe_H82I4RrMpBFP7XjE5xesc3Km8uDBne-g
 
 ### Get a video by user ID
 GET http://localhost:3000/videos/usuario/1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzI5Mjc2ODM3LCJleHAiOjE3MjkyOTEyMzd9.Hs8z1dsyRWHcxQ9QkhMAhMssyEUMe77HnUpoGN4w2Ag
 
 ### Upload a video
 POST http://localhost:3000/videos HTTP/1.1
 Content-Type: multipart/form-data
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzI5Mjc2ODM3LCJleHAiOjE3MjkyOTEyMzd9.Hs8z1dsyRWHcxQ9QkhMAhMssyEUMe77HnUpoGN4w2Ag
 
 --boundary
 Content-Disposition: form-data; name="video"; filename="sample.mp4"
@@ -107,6 +126,7 @@ Content-Type: video/mp4
 
 ### Delete a video
 DELETE http://localhost:3000/videos/1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzI5Mjc2ODM3LCJleHAiOjE3MjkyOTEyMzd9.Hs8z1dsyRWHcxQ9QkhMAhMssyEUMe77HnUpoGN4w2Ag
 
 
 
