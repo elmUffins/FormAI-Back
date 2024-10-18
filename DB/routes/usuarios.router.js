@@ -6,7 +6,7 @@ const router = Router();
 
 // Define routes
 router.post('/register', usuariosController.register);
-router.post('/login', usuariosController.logIn);
+router.post('/login', usuariosController.login);
 router.get('/', auth.verifyToken, auth.verifyAdmin, usuariosController.getUsuarios);
 router.get('/:id', auth.verifyToken, auth.verifyAdmin, usuariosController.getUsuario);
 router.post('/', auth.verifyToken, auth.verifyAdmin, usuariosController.createUsuario);

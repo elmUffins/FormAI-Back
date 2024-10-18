@@ -38,8 +38,6 @@ const deleteUsuario = async (id) => {
 };
 
 export default {
-    register,
-    login,
     getAllUsuarios,
     getUsuarioById,
     getUsuarioByEmail,

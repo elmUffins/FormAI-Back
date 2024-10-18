@@ -27,6 +27,8 @@ const uploadVideo = async (file) => {
             "INSERT INTO videos (url) VALUES ($1) RETURNING *",
             [secureUrl]
         );
+
+        console.log(rows[0]);
         return rows[0];
     } catch (error) {
         throw new Error("Video upload failed");

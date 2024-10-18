@@ -1,4 +1,4 @@
-import videosService from "../services/videos.service";
+import videosService from "../services/videos.service.js";
 
 const getVideos = async (_, res) => {
     try {
