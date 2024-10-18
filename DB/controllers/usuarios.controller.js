@@ -2,7 +2,7 @@ import usuariosService from "../services/usuarios.service.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const JWT_KEY = process.env.JWT_KEY;
+const JWT_KEY = "YW5kYXRlYXZpdmlyYWJvbGl2aWF0b2RhdHVmYW1pbGlhZXN0YWFsbGE=";
 
 const register = async (req, res) => {
     const { usuario, email, pass } = req.body;
@@ -41,7 +41,10 @@ const login = async (req, res) => {
             return res.status(400).json({ message: "User not found" });
         }
 
-        const validPassword = await bcrypt.compare(pass, usuario.password);
+        console.log("Retrieved user:", usuario);
+        console.log("Retrieved password:", usuario.pass);
+
+        const validPassword = await bcrypt.compare(pass, usuario.pass);
         if (!validPassword) {
             return res.status(400).json({ message: "Contraseña incorrecta" });
         }
@@ -98,8 +101,8 @@ const updateUsuario = async (req, res) => {
     const { usuario, email, pass } = req.body;
     const id = req.params.id;
 
-    if (!usuario || !email || !pass || !id) {
-        return res.status(400).json({ error: "Missing info, fella" });
+    if (!id) {
+        return res.status(400).json({ error: "Missing user ID" });
     }
 
     try {
@@ -113,7 +116,7 @@ const updateUsuario = async (req, res) => {
 const promoteUsuario = async (req, res) => {
     const id = req.params.id;
 
-    if (id) {
+    if (!id) {
         return res.status(400).json({ error: "An id is required" });
     }
 

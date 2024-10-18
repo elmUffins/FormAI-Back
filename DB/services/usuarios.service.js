@@ -22,8 +22,32 @@ const createUsuario = async (usuario, email, pass) => {
 };
 
 const updateUsuario = async (id, usuario, email, pass) => {
-    const { rows } = await client.query("UPDATE usuarios SET usuario = $1, SET email = $2, SET pass = $3 WHERE id = $4",
-    [usuario, email, pass, id]);
+    const fields = [];
+    const values = [];
+    let query = "UPDATE usuarios SET ";
+
+    if (usuario) {
+        fields.push(`usuario = $${fields.length + 1}`);
+        values.push(usuario);
+    }
+    if (email) {
+        fields.push(`email = $${fields.length + 1}`);
+        values.push(email);
+    }
+    if (pass) {
+        fields.push(`pass = $${fields.length + 1}`);
+        values.push(pass);
+    }
+
+    if (fields.length === 0) {
+        throw new Error("No fields to update");
+    }
+
+    query += fields.join(", ");
+    query += ` WHERE id = $${fields.length + 1}`;
+    values.push(id);
+
+    const { rows } = await client.query(query, values);
     return rows[0];
 };
 
