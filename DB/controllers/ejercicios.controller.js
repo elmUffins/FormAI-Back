@@ -26,7 +26,7 @@ const createEjercicio = async (req, res) => {
     if (!nombre) return res.status(400).json({ message: "A name is required" });
 
     try {
-        const newEjercicio = await ejerciciosService.createEjercicio(nombre, descripcion);
+        const newEjercicio = await ejerciciosService.createEjercicio(nombre);
         return res.status(201).json(newEjercicio);
     } catch (error) {
         return res.status(500).json({ error: error.message });
@@ -39,7 +39,7 @@ const updateEjercicio = async (req, res) => {
     if (!id || !nombre) return res.status(400).json({ message: "Missing fields" });
 
     try {
-        const updatedEjercicio = await ejerciciosService.updateEjercicio(id, nombre, descripcion);
+        const updatedEjercicio = await ejerciciosService.updateEjercicio(id, nombre);
         return res.json(updatedEjercicio);
     } catch (error) {
         return res.status(500).json({ error: error.message });
