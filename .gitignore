@@ -4,3 +4,4 @@
 DB/.env
 **/node_modules/
 DB/test.js
+**/uploads/
