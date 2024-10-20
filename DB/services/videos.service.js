@@ -1,4 +1,5 @@
 import { client } from "../db.js";
+import fs from "fs";
 import cloudinary from "../cloudinary.js"
 
 const getVideos = async () => {
@@ -18,15 +19,27 @@ const getVideosByUsuario = async (id_usuario) => {
 
 const uploadVideo = async (file) => {
     try {
+        console.log("Starting upload");
         const result = await cloudinary.uploader.upload(file.path, {
             resource_type: "video"
         });
+        console.log("Video uploaded:", result);
         const secureUrl = result.secure_url;
 
+        console.log("Inserting video into database");
         const { rows } = await client.query(
             "INSERT INTO videos (url) VALUES ($1) RETURNING *",
             [secureUrl]
         );
+        console.log("Video inserted into database", rows[0]);
+
+        fs.unlink(file.path, (err) => {
+            if (err) {
+                console.error("Failed to delete local file:", err);
+            } else {
+                console.log("Local file deleted");
+            }
+        });
 
         console.log(rows[0]);
         return rows[0];

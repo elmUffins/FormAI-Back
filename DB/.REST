@@ -16,8 +16,8 @@ POST http://localhost:3000/usuarios/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "fdiaznemeth@gmail.com",
-  "pass": "gagadet"
+  "email": "josecrack@gmail.com",
+  "pass": "ELCRACK123"
 }
 
 ### Get usuarios
@@ -115,15 +115,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxN
 
 ### Upload a video
 POST http://localhost:3000/videos HTTP/1.1
-Content-Type: multipart/form-data
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzI5Mjc2ODM3LCJleHAiOjE3MjkyOTEyMzd9.Hs8z1dsyRWHcxQ9QkhMAhMssyEUMe77HnUpoGN4w2Ag
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzI5NDYwNDc2LCJleHAiOjE3Mjk0NzQ4NzZ9.IwzafUgAklPRrQEZq_2lcu-NvvpsukkhRe9q-BnvTio
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
---boundary
+------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="video"; filename="sample.mp4"
 Content-Type: video/mp4
 
 < ./uploads/dreamfrfr.mp4
---boundary--
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ### Delete a video
 DELETE http://localhost:3000/videos/1 HTTP/1.1
