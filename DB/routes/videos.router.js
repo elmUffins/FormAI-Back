@@ -4,7 +4,17 @@ import videosController from '../controllers/videos.controller.js';
 import auth from '../middleware/auth.js';
 
 const router = Router();
-const upload = multer({ storage: storage });
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, `${Date.now()}-${file.originalname}`);
+    }
+});
+const upload = multer({ storage });
+
 // Define routes
 router.get('/', auth.verifyToken, auth.verifyAdmin, videosController.getVideos);
 router.get('/:id', auth.verifyToken, videosController.getVideo);
