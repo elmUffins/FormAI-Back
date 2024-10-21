@@ -36,11 +36,15 @@ const getVideosByUsuario = async (req, res) => {
 const uploadVideo = async (req, res) => {
     try {
         const file = req.file;
+        const userId = req.userId;
+        const { exerciseId } = req.body; 
         console.log(file)
 
         if (!file) return res.status(400).json({ message: "A file is required" });
+        if (!userId) return res.status(400).json({ message: "A user is expected "});
+        if (!exerciseId) return res.status(400).json({ message: "An exercise is expected "});
 
-        const video = await videosService.uploadVideo(file);
+        const video = await videosService.uploadVideo(file, userId, exerciseId);
         return res.status(201).json(video);
     } catch (error) {
         return res.status(500).json({ error: error.message });

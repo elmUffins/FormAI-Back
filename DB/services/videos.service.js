@@ -17,7 +17,7 @@ const getVideosByUsuario = async (id_usuario) => {
     return rows;
 }
 
-const uploadVideo = async (file) => {
+const uploadVideo = async (file, userId, exerciseId) => {
     try {
         console.log("Starting upload");
         const result = await cloudinary.uploader.upload(file.path, {
@@ -28,8 +28,8 @@ const uploadVideo = async (file) => {
 
         console.log("Inserting video into database");
         const { rows } = await client.query(
-            "INSERT INTO videos (url) VALUES ($1) RETURNING *",
-            [secureUrl]
+            "INSERT INTO videos (url, correcto, id_usuario, id_ejercicio) VALUES ($1, $2, $3, $4) ",
+            [secureUrl, "0", userId, exerciseId]
         );
         console.log("Video inserted into database", rows[0]);
 

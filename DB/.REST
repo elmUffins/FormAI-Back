@@ -5,9 +5,9 @@ POST http://localhost:3000/usuarios/register HTTP/1.1
 Content-Type: application/json
 
 {
-  "usuario": "joseelcrack221",
-  "email": "josecrack@gmail.com",
-  "pass": "ELCRACK123"
+  "usuario": "julikoganxdefe",
+  "email": "urgencianacional@gmail.com",
+  "pass": "defelechuga"
 }
 
 
@@ -16,8 +16,8 @@ POST http://localhost:3000/usuarios/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "josecrack@gmail.com",
-  "pass": "ELCRACK123"
+  "email": "fdiaznemeth@gmail.com",
+  "pass": "defelechuga"
 }
 
 ### Get usuarios
@@ -44,14 +44,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxN
 
 ### Update un usuario
 
-PUT http://localhost:3000/usuarios/3 HTTP/1.1
+PUT http://localhost:3000/usuarios/4 HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzI5Mjc2ODM3LCJleHAiOjE3MjkyOTEyMzd9.Hs8z1dsyRWHcxQ9QkhMAhMssyEUMe77HnUpoGN4w2Ag
 
 {
   "usuario": "Fede",
   "email": "",
-  "pass": ""
+  "pass": "nigga"
 }
 
 ### Dar admin
