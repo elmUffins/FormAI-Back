@@ -51,6 +51,20 @@ const uploadVideo = async (req, res) => {
     }
 };
 
+const updateProgreso = async (req, res) => {
+    try {
+        const { videoId, isCorrect } = req.body;
+
+        if (!videoId) return res.status(400).json({ message: "A video ID is required" });
+        if (typeof isCorrect !== 'boolean') return res.status(400).json({ message: "A correctness status is required" });
+
+        const result = await videosService.progreso(videoId, isCorrect);
+        return res.json(result);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
 const deleteVideo = async (req, res) => {
     const id = req.params.id;
     if (!id) return res.status(400).json({ message: "An id is required" });
@@ -68,6 +82,7 @@ export default {
     getVideo,
     getVideosByUsuario,
     uploadVideo,
+    updateProgreso,
     deleteVideo
 };
 

@@ -48,6 +48,38 @@ const uploadVideo = async (file, userId, exerciseId) => {
     }
 };
 
+const updateProgreso = async (videoId, isCorrect) => {
+    try {
+        if (isCorrect) {
+
+            const updateVideoQuery = "UPDATE videos SET correcto = $1 WHERE id = $2 RETURNING *";
+            const { rows: videoRows } = await client.query(updateVideoQuery, [1, videoId]);
+
+            if (videoRows.length === 0) {
+                throw new Error("Video not found");
+            }
+
+            const video = videoRows[0];
+
+            const insertProgresoQuery = "INSERT INTO progreso (id_usuario, id_ejercicio) VALUES ($1, $2) RETURNING *";
+            const { rows: progresoRows } = await client.query(insertProgresoQuery, [video.id_usuario, video.id_ejercicio]);
+
+            return {
+                message: "Exercise marked as correct and progress updated",
+                video: video,
+                progreso: progresoRows[0]
+            };
+        } else {
+            return {
+                message: "Exercise marked as incorrect, no progress updated"
+            };
+        }
+    } catch (error) {
+        throw new Error("Progreso update failed: " + error.message);
+    }
+};
+
+
 const deleteVideo = async (id) => {
     await client.query("DELETE FROM videos WHERE id = $1", [id]);
     return id;
@@ -58,5 +90,6 @@ export default {
     getVideoById,
     getVideosByUsuario,
     uploadVideo,
+    updateProgreso,
     deleteVideo
 };

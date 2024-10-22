@@ -20,7 +20,8 @@ router.get('/', auth.verifyToken, auth.verifyAdmin, videosController.getVideos);
 router.get('/:id', auth.verifyToken, videosController.getVideo);
 router.get('/usuario', auth.verifyToken, videosController.getVideosByUsuario);
 router.post('/', auth.verifyToken, upload.single('video'), videosController.uploadVideo);
-router.put('/:id', auth.verifyToken, videosController.deleteVideo);
+router.post('/progreso', videosController.updateProgreso)
+router.delete('/:id', auth.verifyToken, videosController.deleteVideo);
 
 export default router;
 
