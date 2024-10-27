@@ -26,6 +26,31 @@ const uploadVideo = async (file, userId, exerciseId) => {
         console.log("Video uploaded:", result);
         const secureUrl = result.secure_url;
 
+        let mlApiEndpoint;
+        if (exerciseId === "1") {
+            mlApiEndpoint = 'DIAZNEMETETET LOCALIZADO';
+        } else if (exerciseId === "2") {
+            mlApiEndpoint = 'DIAZNEMETETET LOCALIZADO';
+        } else {
+            throw new Error("Invalid exerciseId");
+        }
+
+        console.log(`Sending video URL to machine learning API at ${mlApiEndpoint}`);
+        const mlResponse = await fetch(mlApiEndpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ videoUrl: secureUrl })
+        });
+
+        if (!mlResponse.ok) {
+            throw new Error("Failed to send video URL to machine learning API");
+        }
+
+        const mlResult = await mlResponse.json();
+        console.log("Machine learning API response:", mlResult);
+
         console.log("Inserting video into database");
         const { rows } = await client.query(
             "INSERT INTO videos (url, correcto, id_usuario, id_ejercicio) VALUES ($1, $2, $3, $4) ",
@@ -50,8 +75,10 @@ const uploadVideo = async (file, userId, exerciseId) => {
 
 const updateProgreso = async (videoId, isCorrect) => {
     try {
-        if (isCorrect) {
+        let responseMessage;
+        let progresoData = null;
 
+        if (isCorrect) {
             const updateVideoQuery = "UPDATE videos SET correcto = $1 WHERE id = $2 RETURNING *";
             const { rows: videoRows } = await client.query(updateVideoQuery, [1, videoId]);
 
@@ -64,16 +91,32 @@ const updateProgreso = async (videoId, isCorrect) => {
             const insertProgresoQuery = "INSERT INTO progreso (id_usuario, id_ejercicio) VALUES ($1, $2) RETURNING *";
             const { rows: progresoRows } = await client.query(insertProgresoQuery, [video.id_usuario, video.id_ejercicio]);
 
-            return {
-                message: "Exercise marked as correct and progress updated",
-                video: video,
-                progreso: progresoRows[0]
-            };
+            progresoData = progresoRows[0];
+            responseMessage = "Exercise marked as correct and progress updated";
         } else {
-            return {
-                message: "Exercise marked as incorrect, no progress updated"
-            };
+            responseMessage = "Exercise marked as incorrect, no progress updated";
         }
+        
+        const frontendResponse = await fetch('JUANPANPANYZ', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                videoId: videoId,
+                isCorrect: isCorrect,
+                progreso: progresoData
+            })
+        });
+
+        if (!frontendResponse.ok) {
+            throw new Error("Failed to send updated status to frontend module");
+        }
+
+        return {
+            message: responseMessage,
+            progreso: progresoData
+        };
     } catch (error) {
         throw new Error("Progreso update failed: " + error.message);
     }
