@@ -1,7 +1,6 @@
 import express from "express";
-import cors from "express";
+import cors from "cors";
 
-const cors = cors();
 const app = express();
 const port = 3000;
 
