@@ -50,7 +50,7 @@ const login = async (req, res) => {
         }
 
         const token = jwt.sign({ id: usuario.id }, JWT_KEY, { expiresIn: '4h' });
-        res.status(200).json({ usuario, token });
+        res.status(200).json({ id: usuario.id, token });
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: "Error al iniciar sesión" });
