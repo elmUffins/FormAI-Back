@@ -26,13 +26,18 @@ const uploadVideo = async (file, userId, exerciseId) => {
         console.log("Video uploaded:", result);
         const secureUrl = result.secure_url;
 
+        let mlApiEndpoint;
+        if (exerciseId === "1") {
+            mlApiEndpoint = 'https://ml.formaitic.me/analyze/squat?video_url=' + secureUrl;
+        } else if (exerciseId === "2") {
+            mlApiEndpoint = 'https://ml.formaitic.me/analyze/plank?video_url=' + secureUrl;
+        } else {
+            throw new Error("Invalid exerciseId");
+        }
+
         console.log(`Sending video URL to machine learning API at ${mlApiEndpoint}`);
         const mlResponse = await fetch(mlApiEndpoint, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ videoUrl: secureUrl })
+            method: 'GET',
         });
 
         if (!mlResponse.ok) {
