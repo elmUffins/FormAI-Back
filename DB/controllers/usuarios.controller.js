@@ -2,7 +2,7 @@ import usuariosService from "../services/usuarios.service.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const JWT_KEY = "YW5kYXRlYXZpdmlyYWJvbGl2aWF0b2RhdHVmYW1pbGlhZXN0YWFsbGE=";
+const JWT_KEY = process.env.JWT_KEY;
 
 const register = async (req, res) => {
     const { usuario, email, pass } = req.body;
@@ -105,8 +105,11 @@ const updateUsuario = async (req, res) => {
         return res.status(400).json({ error: "Missing user ID" });
     }
 
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(pass, salt);
+
     try {
-        const updatedUser = await usuariosService.updateUsuario(id, usuario, email, pass);
+        const updatedUser = await usuariosService.updateUsuario(id, usuario, email, hashedPassword);
         return res.json(updatedUser);
     } catch (error) {
         return res.status(500).json({ error: error.message });
