@@ -109,8 +109,8 @@ const updateUsuario = async (req, res) => {
     const hashedPassword = await bcrypt.hash(pass, salt);
 
     try {
-        const updatedUser = await usuariosService.updateUsuario(id, usuario, email, hashedPassword);
-        return res.json(updatedUser);
+        await usuariosService.updateUsuario(id, usuario, email, hashedPassword);
+        return res.json(id, usuario, email);
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
