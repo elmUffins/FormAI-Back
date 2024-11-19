@@ -36,8 +36,7 @@ const getVideosByUsuario = async (req, res) => {
 const uploadVideo = async (req, res) => {
     try {
         const file = req.file;
-        const userId = req.userId;
-        const { exerciseId } = req.body; 
+        const { userId, exerciseId } = req.body; 
         console.log(file)
 
         if (!file) return res.status(400).json({ message: "A file is required" });
