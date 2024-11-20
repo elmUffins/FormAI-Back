@@ -19,7 +19,7 @@ const upload = multer({ storage });
 router.get('/', auth.verifyToken, auth.verifyAdmin, videosController.getVideos);
 router.get('/:id', auth.verifyToken, videosController.getVideo);
 router.get('/usuario', auth.verifyToken, videosController.getVideosByUsuario);
-router.post('/', auth.verifyToken, upload.single('video'), videosController.uploadVideo);
+router.post('/upload', auth.verifyToken, upload.single('video'), videosController.uploadVideo);
 router.delete('/:id', auth.verifyToken, videosController.deleteVideo);
 
 export default router;
