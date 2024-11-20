@@ -37,7 +37,6 @@ const uploadVideo = async (req, res) => {
     try {
         const videoBuffer = req.file.buffer;
         const { userId, exerciseId } = req.body; 
-        console.log(file)
 
         if (!videoBuffer) return res.status(400).json({ message: "A video is required" });
         if (!userId) return res.status(400).json({ message: "A user is expected "});
