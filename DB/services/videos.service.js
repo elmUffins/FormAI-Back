@@ -17,10 +17,10 @@ const getVideosByUsuario = async (id_usuario) => {
     return rows;
 }
 
-const uploadVideo = async (file, userId, exerciseId) => {
+const uploadVideo = async (video, userId, exerciseId) => {
     try {
         console.log("Starting upload");
-        const result = await cloudinary.uploader.upload(file.path, {
+        const result = await cloudinary.uploader.upload(video.path, {
             resource_type: "video"
         });
         console.log("Video uploaded:", result);
@@ -57,7 +57,7 @@ const uploadVideo = async (file, userId, exerciseId) => {
         );
         console.log("Video inserted into database", rows[0]);
 
-        fs.unlink(file.path, (err) => {
+        fs.unlink(video.path, (err) => {
             if (err) {
                 console.error("Failed to delete local file:", err);
             } else {
