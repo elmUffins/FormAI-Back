@@ -17,13 +17,21 @@ const getVideosByUsuario = async (id_usuario) => {
     return rows;
 }
 
-const uploadVideo = async (video, userId, exerciseId) => {
+const uploadVideo = async (videoBuffer, userId, exerciseId) => {
     try {
-        console.log("Starting upload");
-        const result = await cloudinary.uploader.upload(video.path, {
-            resource_type: "video"
+        const result = await new Promise((resolve, reject) => {
+            const uploadStream = cloudinary.uploader.upload_stream(
+                { resource_type: "video" },
+                (error, result) => {
+                    if (error) reject(error);
+                    else resolve(result);
+                }
+            );
+            uploadStream.end(videoBuffer);
         });
+
         console.log("Video uploaded:", result);
+
         const secureUrl = result.secure_url;
 
         let mlApiEndpoint;
@@ -57,13 +65,13 @@ const uploadVideo = async (video, userId, exerciseId) => {
         );
         console.log("Video inserted into database", rows[0]);
 
-        fs.unlink(video.path, (err) => {
-            if (err) {
-                console.error("Failed to delete local file:", err);
-            } else {
-                console.log("Local file deleted");
-            }
-        });
+        //fs.unlink(video.path, (err) => {
+        //    if (err) {
+        //        console.error("Failed to delete local file:", err);
+        //    } else {
+        //        console.log("Local file deleted");
+        //    }
+        //});
 
         if (correcto) {
             return { correcto: true };
