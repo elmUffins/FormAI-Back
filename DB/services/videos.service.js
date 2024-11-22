@@ -61,7 +61,7 @@ const uploadVideo = async (videoBuffer, userId, exerciseId) => {
         console.log("Inserting video into database");
         const { rows } = await client.query(
             "INSERT INTO videos (url, correcto, id_usuario, id_ejercicio) VALUES ($1, $2, $3, $4) RETURNING *",
-            [secureUrl, correcto, userId, exerciseId]
+            [secureUrl, correct, userId, exerciseId]
         );
         console.log("Video inserted into database", rows[0]);
 
