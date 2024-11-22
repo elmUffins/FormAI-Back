@@ -55,7 +55,7 @@ const uploadVideo = async (videoBuffer, userId, exerciseId) => {
         const mlResult = await mlResponse.json();
         console.log("Machine learning API response:", mlResult);
 
-        const correcto = mlResult.correcto ? 1 : 0;
+        const correct = mlResult.correct ? 1 : 0;
         const success = mlResult.success ? 1 : 0;
 
         console.log("Inserting video into database");
@@ -74,11 +74,11 @@ const uploadVideo = async (videoBuffer, userId, exerciseId) => {
         //});
 
         if (success) {
-            if (correcto) {
-                return { correcto: true } 
+            if (correct) {
+                return { correct: true } 
             }
             else {
-                return { correcto: false }
+                return { correct: false }
             }
         } 
         else {
