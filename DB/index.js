@@ -10,14 +10,7 @@ import videosRouter from './routes/videos.router.js';
 
 import "dotenv/config";
 
-app.use(express.json());
 
-const corsOptions = {
-    origin: '*',
-    methods: ['GET', 'PUT', 'POST', 'DELETE']
-};
-  
-app.use(cors(corsOptions));
 
 app.get("/", (_, res) => {
     res.send("1");
